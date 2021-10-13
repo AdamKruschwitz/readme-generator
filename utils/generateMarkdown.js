@@ -44,18 +44,19 @@ const badgeData = [ {
 
 
 
-// TODO: Create a function that returns a license badge based on which license is passed in
+// Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
   if(!license) return "";
 
   const badges = new Map();
-  console.log(badgeData);
   for(const {name, badge} of badgeData)  {
     badges.set(name, badge);
   }
 
-  console.log(badges);
+  let out = badges.get(license);
+  if(!out) return "";
+  else return out;
 }
 
 // TODO: Create a function that returns the license link
