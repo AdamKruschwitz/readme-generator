@@ -48,6 +48,7 @@ const questions = [
     }
 ];
 
+// Questions asked recursively.
 const contributorQuestions = [
     {
         name: "name",
@@ -69,8 +70,9 @@ const contributorQuestions = [
     }
 ]
 
+// Global function used to track responses across multiple inquirer prompts
 var responses = {};
-responses.contributors = [];
+
 // Create a function to write README file
 function writeToFile(fileName, data) {
     fs.writeFile(`./output/${fileName}`, data, 
@@ -79,6 +81,7 @@ function writeToFile(fileName, data) {
     });
 }
 
+// Promise callback for getting the contributors recursively (in case there's more than 1)
 const askForContributors = (resolve, reject) => {
     inquirer.prompt(contributorQuestions).then( (contributor) => {
         responses.contributors.push(contributor);
@@ -94,10 +97,10 @@ function init() {
         responses.contributors = [];
         let contributors = new Promise(askForContributors);
         // After asking for all the contributors, generate the markdown and write the file
+        // Very much looking for feedback on this way of using promises. is there a cleaner way to do this?
         contributors.then( () => writeToFile("README.md", markdown(responses) ) );
     })
 }
 
 // Function call to initialize app
 init();
-// console.log(askForContributors());
