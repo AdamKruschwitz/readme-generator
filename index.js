@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require('inquirer');
+const markdown = require('./utils/generateMarkdown')
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -74,11 +75,12 @@ function writeToFile(fileName, data) {
     });
 }
 
-function askForContributors() {
-    inquirer.prompt(contributorQuestions).then((contributor) => {
+const askForContributors = (resolve, reject) => {
+    inquirer.prompt(contributorQuestions).then( (contributor) => {
         responses.contributors.push(contributor);
-        if(contributor.askAgain) askForContributor();
-    });
+        if(contributor.askAgain) askForContributors();
+        else resolve();
+    } );
 }
 
 // TODO: Create a function to initialize app
@@ -86,10 +88,12 @@ function init() {
     inquirer.prompt(questions).then((answers) => {
         responses = answers;
         responses.contributors = [];
-        askForContributors();
-    });
+        let contributors = new Promise(askForContributors);
+        // After asking for all the contributors, generate the markdown and write the file
+        contributors.then( () => writeToFile("README.md", markdown(responses) ) );
+    })
 }
 
 // Function call to initialize app
-// init();
-console.log(askForContributors());
+init();
+// console.log(askForContributors());
