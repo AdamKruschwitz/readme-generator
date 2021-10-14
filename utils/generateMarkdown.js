@@ -182,6 +182,7 @@ ${data.tests}
 ## License
 ${renderLicenseBadge(data.license)}
 ${renderLicenseSection(data.license)}
+
 Read more: ${renderLicenseLink(data.license)}
 
 ## Contributors
