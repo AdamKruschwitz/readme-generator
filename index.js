@@ -81,26 +81,33 @@ function writeToFile(fileName, data) {
     });
 }
 
-// Promise callback for getting the contributors recursively (in case there's more than 1)
-const askForContributors = (resolve, reject) => {
-    inquirer.prompt(contributorQuestions).then( (contributor) => {
-        responses.contributors.push(contributor);
-        if(contributor.askAgain) askForContributors();
-        else resolve();
-    } );
+// Asynchronous function which gets the contributors
+getContributors = async () => {
+
+    // encapsulated recursive function. returns a promise if more contributors are to be added, continuing the promise chain.
+    const askForContributors = async () => {
+        await inquirer.prompt(contributorQuestions).then(contributor => {
+            responses.contributors.push(contributor);
+            if(contributor.askAgain) return askForContributors();
+            return true;
+        });
+    }
+    return askForContributors();
 }
+
 
 // Create a function to initialize app
 function init() {
     inquirer.prompt(questions).then((answers) => {
         responses = answers;
         responses.contributors = [];
-        let contributors = new Promise(askForContributors);
+        // let contributors = new Promise(_askForContributors);
         // After asking for all the contributors, generate the markdown and write the file
         // Very much looking for feedback on this way of using promises. is there a cleaner way to do this?
-        contributors.then( () => writeToFile("README.md", markdown(responses) ) );
-    })
+        getContributors().then( () => writeToFile("README.md", markdown(responses) ) );
+    });
 }
 
 // Function call to initialize app
+// console.log(inquirer.prompt({name:"none", message:"test"}));
 init();
