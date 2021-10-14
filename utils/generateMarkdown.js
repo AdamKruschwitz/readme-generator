@@ -127,7 +127,7 @@ function renderLicenseLink(license) {
     if(!license) return "";
 
     const links = _getLicenseAttribute("links");
-    let out = badges.get(license);
+    let out = links.get(license);
 
     if(!out) return "";
     else return `[Link to license](${out.link})`;
@@ -136,7 +136,15 @@ function renderLicenseLink(license) {
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) {}
+function renderLicenseSection(license) {
+    if(!license) return "";
+
+    const licenseTexts = _getLicenseAttribute("text");
+    let out = licenseTexts.get(license);
+
+    if(!out) return "";
+    else return out.text;
+}
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
