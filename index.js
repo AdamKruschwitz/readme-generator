@@ -1,5 +1,6 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
+const inquirer = require('inquirer');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -63,6 +64,8 @@ const contributorQuestions = [
     }
 ]
 
+var responses = {};
+responses.contributors = [];
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     fs.writeFile(`./output/${fileName}`, data, 
@@ -71,8 +74,22 @@ function writeToFile(fileName, data) {
     });
 }
 
+function askForContributors() {
+    inquirer.prompt(contributorQuestions).then((contributor) => {
+        responses.contributors.push(contributor);
+        if(contributor.askAgain) askForContributor();
+    });
+}
+
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt(questions).then((answers) => {
+        responses = answers;
+        responses.contributors = [];
+        askForContributors();
+    });
+}
 
 // Function call to initialize app
-init();
+// init();
+console.log(askForContributors());
