@@ -41,20 +41,24 @@ const questions = [
     {
         name: "tests",
         message: "Input your programs tests: "
+    },
+    {
+        name: "email",
+        message: "Input your email: "
     }
 ];
 
 const contributorQuestions = [
     {
-        name: "contributorName",
+        name: "name",
         message: "Input a contributor name: "
     },
     {
-        name: "contributorGitHub",
+        name: "gitHub",
         message: "Input a contributor GitHub: "
     },
     {
-        name: "contributorLinkedIn",
+        name: "linkedIn",
         message: "Input a contributor LinkedIn"
     },
     {

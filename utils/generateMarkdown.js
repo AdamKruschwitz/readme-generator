@@ -5,7 +5,7 @@ const licenses = [ {
       "name": "Apache",
       "badge": "https://img.shields.io/badge/License-Apache%202.0-blue.svg",
       "link": "https://opensource.org/licenses/Apache-2.0",
-      "text": ` Copyright [yyyy] [name of copyright owner]
+      "text": `
 
       Licensed under the Apache License, Version 2.0 (the "License");
       you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@ const licenses = [ {
       "name": "BSD",
       "badge": "https://img.shields.io/badge/License-BSD%203--Clause-blue.svg",
       "link": "https://opensource.org/licenses/BSD-3-Clause",
-      "text": `Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+      "text": `
+      Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
       1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
       
@@ -43,7 +44,8 @@ const licenses = [ {
       "name": "Creative Commons",
       "badge": "https://licensebuttons.net/l/zero/1.0/80x15.png",
       "link": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "text": `The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+      "text": `
+      The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
 
       You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.`
   },
@@ -57,7 +59,8 @@ const licenses = [ {
       "name": "GNU",
       "badge": "https://img.shields.io/badge/License-GPLv3-blue.svg",
       "link": "https://www.gnu.org/licenses/gpl-3.0",
-      "text": `This program is free software: you can redistribute it and/or modify
+      "text": `
+      This program is free software: you can redistribute it and/or modify
       it under the terms of the GNU General Public License as published by
       the Free Software Foundation, either version 3 of the License, or
       (at your option) any later version.
@@ -74,13 +77,15 @@ const licenses = [ {
       "name": "IBM",
       "badge": "https://img.shields.io/badge/License-IPL%201.0-blue.svg",
       "link": "https://opensource.org/licenses/IPL-1.0",
-      "text": `THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS IBM PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.`
+      "text": `
+      THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS IBM PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.`
   },
   {
       "name": "MIT",
       "badge": "https://img.shields.io/badge/License-MIT-yellow.svg",
       "link": "https://opensource.org/licenses/MIT",
-      "text": `Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+      "text": `
+      Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
       
       The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
       
@@ -90,13 +95,15 @@ const licenses = [ {
       "name": "Mozilla",
       "badge": "https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg",
       "link": "https://opensource.org/licenses/MPL-2.0",
-      "text": "This work is under the [Mozilla Public License 2.0](https://opensource.org/licenses/MPL-2.0)."
+      "text": `
+      This work is under the [Mozilla Public License 2.0](https://opensource.org/licenses/MPL-2.0).`
   },
   {
       "name": "Perl",
       "badge": "https://img.shields.io/badge/License-Perl-0298c3.svg",
       "link": "https://opensource.org/licenses/Artistic-2.0",
-      "text": "Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed. For more information, [see the license here](https://img.shields.io/badge/License-Perl-0298c3.svg)"
+      "text": `
+      Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.`
   } ];
 
 // Returns a map containing license data of the given attribute
@@ -115,10 +122,10 @@ function renderLicenseBadge(license) {
   if(!license) return "";
 
   const badges = _getLicenseAttribute("badge");
-  let out = badges.get(license);
+  let badge = badges.get(license);
 
-  if(!out) return "";
-  else return `[![License](${out.badge})] (${out.link})`;
+  if(!badge) return "";
+  else return `![License](${badge})`;
 }
 
 // TODO: Create a function that returns the license link
@@ -127,10 +134,10 @@ function renderLicenseLink(license) {
     if(!license) return "";
 
     const links = _getLicenseAttribute("links");
-    let out = links.get(license);
+    let link = links.get(license);
 
-    if(!out) return "";
-    else return `[Link to license](${out.link})`;
+    if(!link) return "";
+    else return `[Link to license](${link})`;
     
 }
 
@@ -140,17 +147,58 @@ function renderLicenseSection(license) {
     if(!license) return "";
 
     const licenseTexts = _getLicenseAttribute("text");
-    let out = licenseTexts.get(license);
+    let text = licenseTexts.get(license);
 
-    if(!out) return "";
-    else return out.text;
+    if(!text) return "";
+    else return text;
 }
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  return `# ${data.title}
+    console.log(data);
+    let out =  `# ${data.title}
 
+## Table of Contents
+* [Description](#description)
+* [Installation instructions](#installation-instructions)
+* [Usage Information](#usage-information)
+* [Program Tests](#program-tests)
+* [License](#license)
+* [Contributors](#contributors)
+* [Questions](#questions)
+
+## Description
+${data.description}
+
+## Installation instructions
+${data.installation}
+
+## Usage Information
+${data.usage}
+
+## Program Tests
+${data.tests}
+
+## License
+${renderLicenseBadge(data.license)}
+${renderLicenseSection(data.license)}
+Read more: ${renderLicenseLink(data.license)}
+
+## Contributors
 `;
+
+    // Add each of the contributors
+    data.contributors.forEach(contributor => {
+        out += `
+**${contributor.name}**
+* [GitHub](${contributor.gitHub})
+* [LinkedIn](${contributor.linkedIn})`
+    });
+
+    out += `
+## Questions
+reach out to me at \`\`\`${data.email}\`\`\` and I'll get back to you as soon as I can`
+    return out;
 
 }
 
