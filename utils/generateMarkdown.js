@@ -99,19 +99,24 @@ const licenses = [ {
       "text": "Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed. For more information, [see the license here](https://img.shields.io/badge/License-Perl-0298c3.svg)"
   } ];
 
+// Returns a map containing license data of the given attribute
+function _getLicenseAttribute(attribute) {
+    let out = new Map();
+    for(const license of licenses) {
+        out.set(license.name, license[attribute]);
+    }
 
+    return out;
+}
 
 // Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
   if(!license) return "";
 
-  const badges = new Map();
-  for(const {name, badge} of licenses)  {
-    badges.set(name, badge);
-  }
-
+  const badges = _getLicenseAttribute("badge");
   let out = badges.get(license);
+
   if(!out) return "";
   else return `[![License](${out.badge})] (${out.link})`;
 }
@@ -119,6 +124,14 @@ function renderLicenseBadge(license) {
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
+    if(!license) return "";
+
+    const links = _getLicenseAttribute("links");
+    let out = badges.get(license);
+
+    if(!out) return "";
+    else return `[Link to license](${out.link})`;
+    
 }
 
 // TODO: Create a function that returns the license section of README
